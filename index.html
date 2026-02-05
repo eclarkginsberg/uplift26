@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Booking Redirect</title>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const expires = parseInt(params.get('exp'));
+    const waitwhileUrl = params.get('url');
+    
+    if (Date.now() > expires) {
+      document.body.innerHTML = `
+        <div style="font-family: sans-serif; text-align: center; padding: 50px;">
+          <h1>This booking link has expired</h1>
+          <p>Please contact the marketing team if you still need to schedule.</p>
+        </div>
+      `;
+    } else {
+      window.location.href = decodeURIComponent(waitwhileUrl);
+    }
+  </script>
+</head>
+<body>Loading...</body>
+</html>
+```
