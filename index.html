@@ -7,13 +7,24 @@
     const expires = parseInt(params.get('exp'));
     const waitwhileUrl = params.get('url');
     
-    if (Date.now() > expires) {
-      document.body.innerHTML = `
-        <div style="font-family: sans-serif; text-align: center; padding: 50px;">
-          <h1>This booking link has expired</h1>
-          <p>Please contact the marketing team if you still need to schedule.</p>
-        </div>
-      `;
+    if (!waitwhileUrl) {
+      document.addEventListener('DOMContentLoaded', function() {
+        document.body.innerHTML = `
+          <div style="font-family: sans-serif; text-align: center; padding: 50px;">
+            <h1>Invalid booking link</h1>
+            <p>This link appears to be malformed. Please contact the marketing team.</p>
+          </div>
+        `;
+      });
+    } else if (Date.now() > expires) {
+      document.addEventListener('DOMContentLoaded', function() {
+        document.body.innerHTML = `
+          <div style="font-family: sans-serif; text-align: center; padding: 50px;">
+            <h1>This booking link has expired</h1>
+            <p>Please contact the marketing team if you still need to schedule.</p>
+          </div>
+        `;
+      });
     } else {
       window.location.href = decodeURIComponent(waitwhileUrl);
     }
@@ -21,4 +32,3 @@
 </head>
 <body>Loading...</body>
 </html>
-```
